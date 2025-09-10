@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudio Jurídico & Contable</title>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Librería para generar QR -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --juridico-primary: #1E8449; /* Verde oscuro profesional */
+            --juridico-secondary: #239B56; /* Verde más claro */
+            --juridico-accent: #F1C40F; /* Acento dorado/amarillo */
+            --contable-primary: #943126; /* Granate/Marrón oscuro */
+            --contable-secondary: #B03A2E; /* Granate más claro */
+            --contable-accent: #E59866; /* Acento naranja suave */
+            --digital-primary: #2980b9;
+            --digital-secondary: #3498db;
+            --digital-accent: #00A7B5;
+            --ambiental-primary: #27AE60;
+            --ambiental-secondary: #2ECC71;
+            --ambiental-accent: #82E0AA;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1c2b4d, #35374B);
+            color: #fff;
+            transition: background 0.5s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main {
+            flex: 1 0 auto;
+        }
+
+        /* --- Estructura Principal --- */
+        .page {
+            display: none; /* Ocultar todas las páginas por defecto */
+            animation: fadeIn 0.8s ease-in-out;
+            box-sizing: border-box;
+        }
+
+        .page.active {
+            display: block; /* Mostrar solo la página activa */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* --- Cabecera --- */
+        .site-header {
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        .header-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 25px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .patrocinado-login span {
+            margin-right: 10px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .login-btn {
+            background-color: var(--digital-primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-btn:hover {
+            background-color: var(--digital-secondary);
+        }
+        
+        #logout-btn {
+             background-color: var(--contable-primary);
+        }
+        #logout-btn:hover {
+             background-color: var(--contable-secondary);
+        }
+
+        .header-contact-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .contact-item i {
+            color: var(--digital-accent);
+        }
+
+        .mobile-contact-btn {
+            display: none;
+            margin-left: auto;
+            background-color: var(--ambiental-primary);
+        }
+
+        .mobile-contact-btn:hover {
+             background-color: var(--ambiental-secondary);
+        }
+
+
+        /* --- Página de Introducción --- */
+        #intro-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            min-height: calc(100vh - 420px);
+            text-align: center;
+            padding: 40px 15px;
+        }
+        
+        .intro-main-content {
+            margin: auto; /* Centra el contenido principal */
+        }
+        
+        .animated-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px auto; /* Reducido margen inferior */
+            color: #F3D9A5; /* Tono dorado */
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(243, 217, 165, 0.8);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-top: -15px;
+            margin-bottom: 50px;
+            animation: fadeInSubtitle 2s ease-in-out 1s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInSubtitle {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated-title .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: revealChar 0.5s forwards, individualFlash 4s infinite;
+            animation-delay: var(--char-delay), var(--flash-delay);
+        }
+
+        @keyframes revealChar {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes individualFlash {
+            0%, 45%, 100% {
+                color: #F3D9A5;
+                text-shadow: 0 0 8px rgba(243, 217, 165, 0.5);
+            }
+            50% {
+                color: #FFFFFF;
+                text-shadow: 0 0 10px #fff, 0 0 20px #F3D9A5, 0 0 40px #F3D9A5;
+            }
+        }
+
+        .intro-buttons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .service-navigator {
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s, transform 0.3s;
+            cursor: pointer;
+            position: relative; /* Añadido para posicionar el reflejo */
+            overflow: hidden;   /* Añadido para contener el reflejo */
+        }
+
+        .service-navigator:hover {
+            transform: translateY(-8px);
+        }
+        
+        /* Colores para botones de navegación de la intro */
+        .juridico-nav { background-color: var(--juridico-primary); }
+        .contable-nav { background-color: var(--contable-primary); }
+        .digital-nav { background-color: var(--digital-primary); }
+        .ambiental-nav { background-color: var(--ambiental-primary); }
+
+        .juridico-nav:hover { background-color: var(--juridico-secondary); }
+        .contable-nav:hover { background-color: var(--contable-secondary); }
+        .digital-nav:hover { background-color: var(--digital-secondary); }
+        .ambiental-nav:hover { background-color: var(--ambiental-secondary); }
+
+        .service-navigator .service-icon {
+            font-size: 70px;
+            margin-bottom: 22px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-navigator span {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .service-subtitle {
+            margin: 5px 0 0 0;
+            padding: 0;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+
+        /* --- Estructura de Páginas de Servicio --- */
+        .service-page-container {
+            padding-bottom: 60px; /* Espacio para el footer */
+            box-sizing: border-box;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 20px 60px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .hero-button {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 12px 30px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin: 5px;
+        }
+        
+        .content-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            width: 80px;
+            height: 4px;
+            background-color: #fff;
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+      
+        .service-card, .product-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(5px);
+            position: relative;
+        }
+        
+        .service-card:hover, .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        .card-button {
+            margin-top: 20px;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .info-section {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 50px 20px;
+            border-radius: 15px;
+            margin-top: 60px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .info-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* --- Botón de Volver --- */
+        .back-button {
+            position: fixed;
+            top: 60px; /* Debajo de la cabecera */
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Botones Flotantes (FAB) --- */
+        .fab-container { 
+            position: fixed; 
+            bottom: 30px; 
+            right: 30px; 
+            z-index: 1000;
+            display: flex;
+            flex-direction: column-reverse; /* Apila con el último encima */
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .fab-btn {
+            color: white; 
+            border: none; 
+            border-radius: 50%; 
+            width: 60px; 
+            height: 60px; 
+            font-size: 1.8rem;
+            cursor: pointer; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            transition: transform 0.2s;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .fab-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .call-btn {
+            background-color: var(--digital-primary);
+        }
+        .call-btn:hover {
+            background-color: var(--digital-secondary);
+        }
+
+        .whatsapp-group {
+            position: relative;
+        }
+
+        .whatsapp-btn { 
+            background-color: #25D366; 
+            font-size: 2rem !important; /* Mantener icono grande */
+            animation: bounce 2s infinite ease-in-out;
+            animation-delay: 5s;
+        }
+        .whatsapp-btn:hover { 
+            animation-play-state: paused;
+        }
+        
+        .whatsapp-list { 
+            position: absolute; 
+            bottom: 0; 
+            right: 80px; /* A la izquierda del botón */
+            border-radius: 10px; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+            display: none; 
+            flex-direction: column; 
+            width: 260px; 
+            overflow: hidden; 
+        }
+
+        .whatsapp-list.show { display: flex; }
+        
+        .whatsapp-list a { 
+            text-decoration: none; 
+            color: white; 
+            background-color: #2ecc71; 
+            padding: 15px 20px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .whatsapp-list a:last-child { border-bottom: none; }
+        .whatsapp-list a:hover { background-color: #27ae60; }
+        .whatsapp-list a .service-info { display: flex; align-items: center; }
+        .whatsapp-list a .service-info i { margin-right: 15px; }
+        .whatsapp-list a .whatsapp-icon { font-size: 1.5rem; }
+
+        .whatsapp-list a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -85%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.8s ease;
+        }
+
+        .whatsapp-list a:hover::before {
+            left: 150%;
+        }
+
+        /* --- Temas de Color Específicos --- */
+        
+        /* Tema Jurídico */
+        #juridico-page .hero { background: linear-gradient(135deg, var(--juridico-primary), var(--juridico-secondary)); }
+        #juridico-page .section-title::after { background-color: var(--juridico-accent); }
+        #juridico-page .card-icon { color: var(--juridico-accent); }
+        #juridico-page .hero-button:hover { background: var(--juridico-accent); border-color: var(--juridico-accent); color: #000; }
+        #juridico-page .card-button { border-color: var(--juridico-accent); background-color: var(--juridico-accent); color: #000; }
+        #juridico-page .card-button:hover { background: transparent; color: var(--juridico-accent); }
+        #juridico-page .visitor-counter i { color: var(--juridico-accent); }
+        
+        .service-card .card-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .admin-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+
+        .admin-btn {
+            background: rgba(0,0,0,0.4);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+        .admin-btn:hover {
+            background: rgba(0,0,0,0.6);
+        }
+
+        .delete-btn {
+            background-color: var(--contable-primary);
+        }
+        .delete-btn:hover {
+            background-color: var(--contable-secondary);
+        }
+        
+        .service-card-footer {
+            margin-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        .details-toggle-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .details-toggle-btn.active {
+            transform: rotate(180deg);
+        }
+         #juridico-page .details-toggle-btn { color: var(--juridico-accent); }
+         #contable-page .details-toggle-btn { color: var(--contable-accent); }
+         #ambiental-page .details-toggle-btn { color: var(--ambiental-accent); }
+
+
+        .service-details {
+            text-align: left;
+            margin-top: 15px;
+            font-size: 0.95rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .service-details ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .service-details li {
+            margin-bottom: 8px;
+        }
+
+
+        /* Tema Contable */
+        #contable-page .hero { background: linear-gradient(135deg, var(--contable-primary), var(--contable-secondary)); }
+        #contable-page .section-title::after { background-color: var(--contable-accent); }
+        #contable-page .card-icon { color: var(--contable-accent); }
+        #contable-page .hero-button:hover { background: var(--contable-accent); border-color: var(--contable-accent); color: #000; }
+        #contable-page .card-button { border-color: var(--contable-accent); background-color: var(--contable-accent); color: #000; }
+        #contable-page .card-button:hover { background: transparent; color: var(--contable-accent); }
+        #contable-page .visitor-counter i { color: var(--contable-accent); }
+
+        /* Tema Digital */
+        #digital-page .hero { background: linear-gradient(135deg, var(--digital-primary), var(--digital-secondary)); }
+        #digital-page .section-title::after { background-color: var(--digital-accent); }
+        #digital-page .card-icon { color: var(--digital-accent); }
+        #digital-page .hero-button:hover { background: var(--digital-accent); border-color: var(--digital-accent); color: #000; }
+        #digital-page .card-button { border-color: var(--digital-accent); background-color: var(--digital-accent); color: #000; }
+        #digital-page .card-button:hover { background: transparent; color: var(--digital-accent); }
+        #intro-page .visitor-counter i, #digital-page .visitor-counter i { color: var(--digital-accent); }
+
+        /* Tema Ambiental */
+        #ambiental-page .hero { background: linear-gradient(135deg, var(--ambiental-primary), var(--ambiental-secondary)); }
+        #ambiental-page .section-title::after { background-color: var(--ambiental-accent); }
+        #ambiental-page .card-icon { color: var(--ambiental-accent); }
+        #ambiental-page .hero-button:hover { background: var(--ambiental-accent); border-color: var(--ambiental-accent); color: #000; }
+        #ambiental-page .card-button { border-color: var(--ambiental-accent); background-color: var(--ambiental-accent); color: #000; }
+        #ambiental-page .card-button:hover { background: transparent; color: var(--ambiental-accent); }
+        #ambiental-page .visitor-counter i { color: var(--ambiental-accent); }
+
+        /* Tema Galería de Videos */
+        .video-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .video-player-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            cursor: pointer;
+        }
+        .video-player-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .video-player-container .play-button-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 15px rgba(0,0,0,0.5);
+            pointer-events: none; /* Allows clicks to go through to the container */
+            transition: transform 0.2s;
+        }
+        .video-player-container:hover .play-button-overlay {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .video-player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-card-title {
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Efecto de destello tipo reflejo en los botones de la intro */
+        .service-navigator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -85%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.8s ease-in-out;
+        }
+        
+        .service-navigator:hover::before {
+            left: 150%;
+        }
+
+        /* --- Modal del Formulario --- */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1002; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+
+        #video-modal {
+             z-index: 1003; /* Asegura que esté por encima de la galería */
+        }
+
+        .modal-content {
+            background-color: #2c3e50;
+            margin: 10% auto;
+            padding: 25px 35px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        #video-gallery-modal .modal-content {
+            max-width: 90vw;
+            width: 900px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        #video-gallery-modal .content-section {
+            padding: 20px;
+        }
+
+        .modal-close-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: var(--contable-primary);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-close-btn:hover {
+            background-color: var(--contable-secondary);
+        }
+
+        .modal-form label {
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .modal-form .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .modal-form .checkbox-group label {
+            margin-top: 0;
+            margin-left: 10px;
+        }
+
+        .modal-form input, .modal-form textarea, .modal-form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #777;
+            background-color: #34495e;
+            color: white;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        .modal-submit-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 25px;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            background-color: var(--juridico-primary);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .modal-submit-button:hover {
+            background-color: var(--juridico-secondary);
+        }
+
+        #login-form .modal-submit-button, #share-form .modal-submit-button, #product-form .modal-submit-button {
+            background-color: var(--digital-primary);
+        }
+        #login-form .modal-submit-button:hover, #share-form .modal-submit-button:hover, #product-form .modal-submit-button:hover {
+            background-color: var(--digital-secondary);
+        }
+        
+        .contact-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .contact-item-modal {
+            display: flex;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.1rem;
+        }
+        .contact-item-modal:last-child {
+            border-bottom: none;
+        }
+        .contact-item-modal i {
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+            color: var(--digital-accent);
+        }
+
+        #qrcode-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+        
+        #qrcode-container img {
+            border-radius: 5px;
+        }
+
+        /* --- Pie de Página --- */
+        .site-footer {
+            flex-shrink: 0;
+            background: rgba(0,0,0,0.2);
+            padding-top: 40px;
+            text-align: center;
+        }
+
+        .location-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+        .location-section .admin-only {
+            position: absolute;
+            top: 0;
+            right: 20px;
+        }
+
+        .map-container {
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .map-container iframe {
+            display: block;
+        }
+        
+        .footer-bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 15px;
+        }
+        
+        .footer-buttons-container {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-bottom-bar .visitor-counter {
+            padding-bottom: 0;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .share-btn {
+            background-color: var(--ambiental-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .share-btn:hover {
+            background-color: var(--ambiental-secondary);
+        }
+
+        .share-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -85%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: left 0.8s ease-in-out;
+        }
+
+        .share-btn:hover::before {
+            left: 150%;
+        }
+        
+        /* Product card specific styles */
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .product-card h3 {
+            font-size: 1.3rem;
+            margin: 10px 0;
+        }
+        .product-card p {
+             font-size: 0.9rem;
+             color: rgba(255, 255, 255, 0.7);
+             min-height: 50px;
+        }
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--digital-accent);
+            margin-top: 15px;
+        }
+        
+        .admin-only {
+            display: none;
+        }
+        
+        .product-delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--contable-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+            cursor: pointer;
+            line-height: 30px;
+        }
+        
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--digital-primary);
+            border-color: var(--digital-primary);
+        }
+
+
+        /* Shopping Cart */
+        .cart-fab {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .cart-icon {
+             background-color: var(--digital-primary);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--contable-primary);
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #1c2b4d;
+        }
+        
+        #cart-items-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-controls button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        #cart-total {
+            text-align: right;
+            font-size: 1.5rem;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+        .yape-note {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+
+        /* --- Media Queries for Responsiveness --- */
+        
+        @media (max-width: 992px) {
+             .header-contact-info {
+                display: none;
+            }
+            .mobile-contact-btn {
+                display: block;
+            }
+             .header-top-bar {
+                justify-content: space-between;
+            }
+            #product-grid, #promotion-grid, #video-grid-modal, #featured-video-grid-modal {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+             .modal-content {
+                margin: 20% auto;
+            }
+            .animated-title {
+                font-size: 2.8rem;
+            }
+            .subtitle {
+                font-size: 1.2rem;
+                margin-top: -10px;
+            }
+            .intro-buttons-container {
+                gap: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Para Celulares */
+        @media (max-width: 480px) {
+            #intro-page {
+                padding-top: 40px;
+                padding-bottom: 20px;
+                min-height: calc(100vh - 450px);
+            }
+            
+            .intro-main-content {
+                width: 100%;
+            }
+
+            .animated-title {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+             .subtitle {
+                font-size: 1rem;
+                letter-spacing: 5px;
+                margin-top: -10px;
+                margin-bottom: 40px;
+            }
+            
+            #product-grid, #promotion-grid, #video-grid-modal, #featured-video-grid-modal {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 80px 15px 40px 15px;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .fab-container {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+             .cart-fab {
+                bottom: 20px;
+                left: 20px;
+            }
+
+            .footer-bottom-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-buttons-container {
+                justify-content: center;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <header class="site-header">
+        <div class="header-top-bar">
+            <div class="patrocinado-login">
+                <span>Ingresa si ya eres patrocinado</span>
+                <button class="login-btn" id="open-login-modal">INGRESAR</button>
+                <button class="login-btn" id="logout-btn" style="display: none;">CERRAR SESIÓN</button>
+            </div>
+            <div class="header-contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-balance-scale"></i>
+                    <span>988-069-100</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-calculator"></i>
+                    <span>958-155-489</span>
+                </div>
+                 <div class="contact-item">
+                    <i class="fas fa-laptop-code"></i>
+                    <span>919-757-542</span>
+                </div>
+                 <div class="contact-item">
+                    <i class="fas fa-leaf"></i>
+                    <span>919-757-542</span>
+                </div>
+            </div>
+            <button class="login-btn mobile-contact-btn" id="open-contact-modal">CONTACTO</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- PÁGINA DE INTRODUCCIÓN -->
+        <div id="intro-page" class="page active">
+            <div class="intro-main-content">
+                <h1 class="animated-title">Estudio Jurídico & Contable</h1>
+                <p class="subtitle">ASOCIADOS</p>
+                <div class="intro-buttons-container">
+                    <div class="service-navigator juridico-nav" data-page="juridico-page">
+                        <i class="fas fa-gavel service-icon"></i>
+                        <span>Estudio Jurídico</span>
+                        <p class="service-subtitle">Abogado</p>
+                    </div>
+                    <div class="service-navigator contable-nav" data-page="contable-page">
+                        <i class="fas fa-calculator service-icon"></i>
+                        <span>Estudio Contable</span>
+                         <p class="service-subtitle">Contador</p>
+                    </div>
+                    <div class="service-navigator digital-nav" data-page="digital-page">
+                        <i class="fas fa-cogs service-icon"></i>
+                        <span>Tienda Virtual</span>
+                         <p class="service-subtitle">Analista</p>
+                    </div>
+                    <div class="service-navigator ambiental-nav" data-page="ambiental-page">
+                        <i class="fas fa-seedling service-icon"></i>
+                        <span>Ing. Ambiental</span>
+                         <p class="service-subtitle">Ingeniero</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA DE SERVICIOS JURÍDICOS -->
+        <div id="juridico-page" class="page">
+            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <div class="service-page-container">
+                <section class="hero">
+                    <h1>Nuestros Servicios Jurídicos</h1>
+                    <p>Brindamos asesoría legal integral con un equipo de abogados expertos en diversas áreas del derecho, comprometidos con la defensa de sus intereses.</p>
+                    <a href="tel:+51988069100" class="hero-button">Solicitar Consulta</a>
+                    <button class="hero-button open-video-gallery-btn" data-service="juridico" style="background-color: var(--digital-primary); border-color: var(--digital-primary);">Ver Videos</button>
+                    <button class="hero-button admin-only add-service-btn" data-service="juridico" style="background-color: var(--juridico-accent); border-color: var(--juridico-accent); color: #000; display: none;">Agregar Servicio</button>
+                </section>
+                <div class="content-section">
+                    <h2 class="section-title">Áreas de Práctica</h2>
+                    <div id="juridico-cards-container" class="cards-container">
+                        <!-- Los servicios jurídicos se cargarán aquí desde JS -->
+                    </div>
+                    <div class="info-section">
+                        <h2>Compromiso y Profesionalismo</h2>
+                        <p>Nuestro equipo se dedica a encontrar la mejor estrategia legal para su caso, garantizando una representación legal de la más alta calidad y un trato personalizado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA DE SERVICIOS CONTABLES -->
+        <div id="contable-page" class="page">
+            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <div class="service-page-container">
+                <section class="hero">
+                    <h1>Nuestros Servicios Contables</h1>
+                    <p>Optimizamos la gestión contable y tributaria de su negocio para asegurar su crecimiento y cumplimiento normativo.</p>
+                    <a href="tel:+51958155489" class="hero-button">Solicitar Asesoría</a>
+                    <button class="hero-button open-video-gallery-btn" data-service="contable" style="background-color: var(--digital-primary); border-color: var(--digital-primary);">Ver Videos</button>
+                     <button class="hero-button admin-only add-service-btn" data-service="contable" style="background-color: var(--contable-accent); border-color: var(--contable-accent); color: #000; display: none;">Agregar Servicio</button>
+                </section>
+                <div class="content-section">
+                    <h2 class="section-title">Nuestras Soluciones</h2>
+                    <div id="contable-cards-container" class="cards-container">
+                        <!-- Los servicios contables se cargarán aquí desde JS -->
+                    </div>
+                    <div class="info-section">
+                        <h2>Su Aliado Estratégico</h2>
+                        <p>Nos enfocamos en la salud financiera de su empresa para que usted pueda enfocarse en hacer crecer su negocio con total tranquilidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PÁGINA DE SERVICIOS DIGITALES (TIENDA) -->
+        <div id="digital-page" class="page">
+            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <div class="service-page-container">
+                 <section class="hero">
+                    <h1>Tienda Virtual de Servicios Digitales</h1>
+                    <p>Encuentra productos y servicios exclusivos para tus necesidades de información y tecnología.</p>
+                     <button class="hero-button open-video-gallery-btn" data-service="digital" style="background-color: var(--digital-accent); border-color: var(--digital-accent); color:#000;">Ver Videos</button>
+                    <button id="add-product-btn" class="hero-button admin-only" style="display: none;">Agregar Producto</button>
+                </section>
+                <div class="content-section">
+                    <div id="promotion-section" style="display:none;">
+                        <h2 class="section-title">Productos en Promoción</h2>
+                        <div id="promotion-grid" class="cards-container"></div>
+                        <hr style="border-color: rgba(255,255,255,0.2); margin: 40px 0;">
+                    </div>
+                    
+                    <h2 class="section-title">Catálogo de Productos</h2>
+                    <div class="category-filters">
+                        <button class="filter-btn active" data-category="All">Todos</button>
+                        <button class="filter-btn" data-category="Streaming">Streaming</button>
+                        <button class="filter-btn" data-category="Licencias">Licencias</button>
+                        <button class="filter-btn" data-category="Buscar Información">Buscar Información</button>
+                    </div>
+                    <div id="product-grid" class="cards-container">
+                        <!-- Los productos se cargarán aquí desde JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- PÁGINA DE INGENIERÍA AMBIENTAL -->
+        <div id="ambiental-page" class="page">
+            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <div class="service-page-container">
+                 <section class="hero">
+                    <h1>Servicios de Ingeniería Ambiental</h1>
+                    <p>Soluciones sostenibles para el cumplimiento normativo y la gestión responsable de los recursos naturales.</p>
+                    <a href="tel:+51919757542" class="hero-button">Contactar a Ingeniero</a>
+                    <button class="hero-button open-video-gallery-btn" data-service="ambiental" style="background-color: var(--digital-primary); border-color: var(--digital-primary);">Ver Videos</button>
+                    <button class="hero-button admin-only add-service-btn" data-service="ambiental" style="background-color: var(--ambiental-accent); border-color: var(--ambiental-accent); color: #000; display: none;">Agregar Servicio</button>
+                </section>
+                <div class="content-section">
+                    <h2 class="section-title">Nuestras Especialidades</h2>
+                    <div id="ambiental-cards-container" class="cards-container">
+                        <!-- Los servicios ambientales se cargarán aquí desde JS -->
+                    </div>
+                    <div class="info-section">
+                        <h2>Compromiso con el Desarrollo Sostenible</h2>
+                        <p>Nuestro enfoque integra la protección del medio ambiente con el crecimiento económico, creando valor para su empresa y la sociedad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="location-section">
+            <div class="admin-only" style="margin-bottom: 15px;">
+                <button class="hero-button" id="edit-location-btn" style="padding: 8px 20px; font-size: 0.9rem;">Editar Ubicación</button>
+            </div>
+            <h2 class="section-title">Nuestra Ubicación</h2>
+            <h3 id="location-title" style="font-weight: 400; margin-top: -30px; margin-bottom: 20px;"></h3>
+            <div class="map-container" id="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3845.895311933931!2d-70.1302306856754!3d-15.49079198927581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9167f339486c7d2b%3A0x442654359691884!2sPlaza%20de%20Armas%20de%20Juliaca!5e0!3m2!1ses-419!2spe!4v1673887345123!5m2!1ses-419!2spe" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <div class="footer-buttons-container">
+                 <button class="share-btn" id="open-share-modal">Compartir Tarjeta <i class="fas fa-share-alt"></i></button>
+            </div>
+            <div class="visitor-counter">
+                <i class="fas fa-users"></i> Visitas: <span class="visit-count-span"></span>
+            </div>
+            <p class="copyright">&copy; 2025 Estudio Jurídico & Contable. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+
+    <!-- MODAL PARA FORMULARIO JURÍDICO (SOLICITAR INFO) -->
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="info-modal-title">Solicitar Información</h2>
+            <form id="info-form" class="modal-form">
+                <input type="hidden" id="info-service-type" name="service-type">
+                <label for="nombre">Nombre y Apellidos:</label>
+                <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan Pérez">
+                <label for="celular">N° de Celular de Contacto:</label>
+                <input type="tel" id="celular" name="celular" required placeholder="Ej: 987654321">
+                 <label for="consulta">Consulta (Opcional):</label>
+                <textarea id="consulta" name="consulta" rows="3"></textarea>
+                <button type="submit" class="modal-submit-button">Enviar por WhatsApp</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL PARA AGREGAR/EDITAR SERVICIOS (UNIFICADO) -->
+    <div id="service-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="service-modal-title">Agregar Servicio</h2>
+            <form id="service-form" class="modal-form">
+                <input type="hidden" id="service-id" name="id">
+                <input type="hidden" id="service-type-field" name="service-type-field">
+                <label for="service-title">Título del Servicio:</label>
+                <input type="text" id="service-title" name="title" required>
+                <label for="service-image">URL de la Imagen:</label>
+                <input type="url" id="service-image" name="image" required placeholder="https://ejemplo.com/imagen.jpg">
+                <label for="service-description">Descripción Breve:</label>
+                <textarea id="service-description" name="description" rows="3" required></textarea>
+                <label for="service-details">Más Detalles (un punto por línea):</label>
+                <textarea id="service-details" name="details" rows="5" placeholder="- Detalle 1&#10;- Detalle 2&#10;- Detalle 3"></textarea>
+                <button type="submit" class="modal-submit-button">Guardar Servicio</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+    
+    <!-- MODAL PARA LOGIN -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2>Acceso Patrocinados</h2>
+            <form id="login-form" class="modal-form">
+                <label for="email">Correo Electrónico (ID):</label>
+                <input type="email" id="email" name="email" required placeholder="sunombre@ejemplo.com">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="modal-submit-button">Ingresar</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+    
+    <!-- MODAL PARA CONTACTOS (MÓVIL) -->
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <h2>Nuestros Contactos</h2>
+            <div class="contact-list">
+                <div class="contact-item-modal">
+                    <i class="fas fa-balance-scale"></i>
+                    <span><b>Servicio Jurídico:</b> 988-069-100</span>
+                </div>
+                <div class="contact-item-modal">
+                    <i class="fas fa-calculator"></i>
+                    <span><b>Servicio Contable:</b> 958-155-489</span>
+                </div>
+                 <div class="contact-item-modal">
+                    <i class="fas fa-laptop-code"></i>
+                    <span><b>Servicios Digitales:</b> 919-757-542</span>
+                </div>
+                 <div class="contact-item-modal">
+                    <i class="fas fa-leaf"></i>
+                    <span><b>Ing. Ambiental:</b> 919-757-542</span>
+                </div>
+            </div>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL PARA COMPARTIR -->
+    <div id="share-modal" class="modal">
+        <div class="modal-content">
+            <h2>Nuestra Tarjeta Virtual</h2>
+            <div id="qrcode-container">
+                <div id="qrcode"></div>
+            </div>
+            <p class="share-instructions" style="text-align: center; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); line-height: 1.5; margin: 10px 0 20px 0;">
+                Escanea el código QR o ingresa un número para compartir el enlace por WhatsApp.
+            </p>
+            <form id="share-form" class="modal-form">
+                <label for="whatsapp-number">Enviar a WhatsApp:</label>
+                <input type="tel" id="whatsapp-number" name="whatsapp-number" required placeholder="Ej: 987654321" pattern="[0-9]{9}">
+                <small style="display: block; text-align: left; margin-top: 5px; color: rgba(255,255,255,0.6);">Se usará el código de país de Perú (+51).</small>
+                <button type="submit" class="modal-submit-button">Enviar Enlace por WhatsApp</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+    
+    <!-- MODAL PARA AGREGAR/EDITAR PRODUCTO -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="product-modal-title">Agregar Nuevo Producto</h2>
+            <form id="product-form" class="modal-form">
+                <label for="product-image">URL de la Imagen:</label>
+                <input type="url" id="product-image" name="image" required placeholder="https://ejemplo.com/imagen.jpg">
+                <label for="product-title">Título del Producto:</label>
+                <input type="text" id="product-title" name="title" required>
+                <label for="product-description">Descripción:</label>
+                <textarea id="product-description" name="description" rows="3" required></textarea>
+                <label for="product-price">Precio (S/):</label>
+                <input type="number" id="product-price" name="price" required step="0.01" min="0">
+                <label for="product-category">Categoría:</label>
+                <select id="product-category" name="category" required>
+                    <option value="Streaming">Streaming</option>
+                    <option value="Licencias">Licencias</option>
+                    <option value="Buscar Información">Buscar Información</option>
+                </select>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="product-promotion" name="promotion">
+                    <label for="product-promotion">Poner en Promoción</label>
+                </div>
+                <button type="submit" class="modal-submit-button">Guardar Producto</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL PARA AGREGAR/EDITAR VIDEO -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <h2 id="video-modal-title">Agregar Nuevo Video</h2>
+            <form id="video-form" class="modal-form">
+                <input type="hidden" id="video-id" name="id">
+                <label for="video-title">Título del Video:</label>
+                <input type="text" id="video-title" name="title" required>
+                <label for="video-url">URL del Video (YouTube o Google Drive):</label>
+                <input type="url" id="video-url" name="url" required placeholder="https://www.youtube.com/watch?v=...">
+                <label for="video-thumbnail">URL de la Miniatura (Opcional):</label>
+                <input type="url" id="video-thumbnail" name="thumbnail" placeholder="Automático para YouTube">
+                <label for="video-service">Categoría del Servicio:</label>
+                <select id="video-service" name="service" required>
+                    <option value="juridico">Estudio Jurídico</option>
+                    <option value="contable">Estudio Contable</option>
+                    <option value="digital">Tienda Virtual</option>
+                    <option value="ambiental">Ing. Ambiental</option>
+                </select>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="video-featured" name="featured">
+                    <label for="video-featured">Marcar como Destacado</label>
+                </div>
+                <button type="submit" class="modal-submit-button">Guardar Video</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- MODAL PARA GALERÍA DE VIDEOS -->
+    <div id="video-gallery-modal" class="modal">
+        <div class="modal-content">
+            <div class="hero" style="padding: 40px 20px;">
+                <h1 id="video-gallery-modal-title">Galería Multimedia</h1>
+                <p>Explora nuestro contenido audiovisual sobre casos de éxito, tutoriales y noticias relevantes.</p>
+                <button id="add-video-btn" class="hero-button admin-only" style="display: none;">Agregar Video</button>
+            </div>
+            <div class="content-section" style="padding: 20px 0;">
+                <div id="featured-video-section-modal" style="display:none;">
+                    <h2 class="section-title">Videos Destacados</h2>
+                    <div id="featured-video-grid-modal" class="cards-container"></div>
+                    <hr style="border-color: rgba(255,255,255,0.2); margin: 40px 0;">
+                </div>
+                
+                <h2 class="section-title">Nuestra Videoteca</h2>
+                <div id="video-grid-modal" class="cards-container">
+                    <!-- Los videos se cargarán aquí desde JS -->
+                </div>
+            </div>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+     <!-- MODAL PARA EDITAR UBICACIÓN -->
+    <div id="location-modal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Ubicación</h2>
+            <form id="location-form" class="modal-form">
+                <label for="location-form-title">Título de la Ubicación:</label>
+                <input type="text" id="location-form-title" name="title" required placeholder="Ej: Oficina Principal - Juliaca">
+                <label for="location-form-url">URL de Google Maps (Embed):</label>
+                <textarea id="location-form-url" name="url" rows="4" required placeholder="Pega aquí el atributo 'src' del iframe de Google Maps"></textarea>
+                <button type="submit" class="modal-submit-button">Guardar Ubicación</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+
+    <!-- MODAL PARA CARRITO DE COMPRAS -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <h2>Mi Carrito de Compras</h2>
+            <ul id="cart-items-list" style="list-style: none; padding: 0;"></ul>
+            <div id="cart-total">Total: S/ 0.00</div>
+            <div class="yape-note">
+                <b>NOTA:</b> Todo pago se realiza por YAPE.
+                <img src="https://peruretail.sfo3.cdn.digitaloceanspaces.com/wp-content/uploads/yap-superapp-1.png" alt="Logo YAPE" style="max-width: 120px; margin: 15px auto 0 auto; display: block;">
+            </div>
+            <button id="add-more-products-btn" class="modal-submit-button" style="background-color: var(--ambiental-primary); margin-top: 10px;">Agregar más Productos</button>
+            <button id="checkout-btn" class="modal-submit-button">Finalizar Compra por WhatsApp</button>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
+
+    <!-- Botones Flotantes -->
+    <div class="fab-container">
+        <div class="cart-fab">
+            <button class="fab-btn cart-icon" id="open-cart-modal">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" style="display: none;">0</span>
+            </button>
+        </div>
+        <a href="tel:+51988069100" class="fab-btn call-btn" aria-label="Llamar al administrador">
+            <i class="fas fa-phone-alt"></i>
+        </a>
+        <div class="whatsapp-group">
+            <button class="fab-btn whatsapp-btn" id="whatsapp-toggle" aria-label="Abrir contactos de WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </button>
+            <div class="whatsapp-list" id="whatsapp-list">
+                <a href="https://wa.me/51988069100" target="_blank">
+                    <span class="service-info">
+                        <i class="fas fa-balance-scale"></i> Servicio Jurídico
+                    </span>
+                    <i class="fab fa-whatsapp whatsapp-icon"></i>
+                </a>
+                <a href="https://wa.me/51958155489" target="_blank">
+                    <span class="service-info">
+                        <i class="fas fa-calculator"></i> Servicio Contable
+                    </span>
+                    <i class="fab fa-whatsapp whatsapp-icon"></i>
+                </a>
+                <a href="https://wa.me/51919757542" target="_blank">
+                    <span class="service-info">
+                        <i class="fas fa-laptop-code"></i> Servicios Digitales
+                    </span>
+                    <i class="fab fa-whatsapp whatsapp-icon"></i>
+                </a>
+                <a href="https://wa.me/51919757542" target="_blank">
+                    <span class="service-info">
+                        <i class="fas fa-leaf"></i> Ing. Ambiental
+                    </span>
+                    <i class="fab fa-whatsapp whatsapp-icon"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // --- Animación del Título ---
+            const title = document.querySelector('.animated-title');
+            const text = title.textContent;
+            title.textContent = '';
+            
+            for (let i = 0; i < text.length; i++) {
+                const char = document.createElement('span');
+                char.className = 'char';
+                char.textContent = text[i] === ' ' ? '\u00A0' : text[i];
+                char.style.setProperty('--char-delay', `${i * 0.05}s`);
+                char.style.setProperty('--flash-delay', `${2 + i * 0.08}s`);
+                title.appendChild(char);
+            }
+
+            // --- Lógica de Navegación ---
+            const allPages = document.querySelectorAll('.page');
+            const navButtons = document.querySelectorAll('.service-navigator, .back-button');
+            const cartFab = document.querySelector('.cart-fab');
+
+            function switchPage(pageId) {
+                allPages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    if (pageId === 'digital-page') {
+                        cartFab.style.display = 'block';
+                    } else {
+                        cartFab.style.display = 'none';
+                    }
+                }
+            }
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const pageId = this.getAttribute('data-page');
+                    if (pageId) {
+                        switchPage(pageId);
+                    }
+                });
+            });
+
+            // --- Lógica de WhatsApp ---
+            const whatsappToggle = document.getElementById('whatsapp-toggle');
+            const whatsappList = document.getElementById('whatsapp-list');
+
+            whatsappToggle.addEventListener('click', function() {
+                whatsappList.classList.toggle('show');
+            });
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('.whatsapp-group')) return;
+                whatsappList.classList.remove('show');
+            });
+
+            // --- Lógica del Contador de Visitas ---
+            const visitCountSpans = document.querySelectorAll('.visit-count-span');
+
+            function animateValue(obj, start, end, duration) {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString('es-PE');
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            }
+
+            const storageKey = 'estudioJuridicoContableVisits';
+            let visitCount = parseInt(localStorage.getItem(storageKey)) || 999; 
+            
+            if (!sessionStorage.getItem('visitedThisSession')) {
+                visitCount++;
+                localStorage.setItem(storageKey, visitCount);
+                sessionStorage.setItem('visitedThisSession', 'true');
+            }
+            
+            const animationStart = Math.max(1000, visitCount - 10);
+            
+            visitCountSpans.forEach(span => {
+                 animateValue(span, animationStart, visitCount, 1500);
+            });
+
+            // --- Lógica de Modales ---
+            function setupModal(modalId, openBtnId) {
+                const modal = document.getElementById(modalId);
+                if (!modal) return null;
+                
+                const openBtn = document.getElementById(openBtnId);
+                const closeBtn = modal.querySelector('.modal-close-btn');
+
+                if (openBtn) {
+                   openBtn.onclick = () => {
+                       modal.style.display = 'block';
+                       if(modalId === 'share-modal') {
+                           const qrCodeContainer = document.getElementById('qrcode');
+                           qrCodeContainer.innerHTML = ''; 
+                           new QRCode(qrCodeContainer, {
+                                text: window.location.href,
+                                width: 180,
+                                height: 180
+                           });
+                       }
+                   }
+                }
+                if (closeBtn) {
+                    closeBtn.onclick = () => modal.style.display = 'none';
+                }
+                
+                window.addEventListener('click', (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+
+                return modal;
+            }
+
+            const infoModal = setupModal('info-modal');
+            const serviceModal = setupModal('service-modal');
+            const loginModal = setupModal('login-modal', 'open-login-modal');
+            const contactModal = setupModal('contact-modal', 'open-contact-modal');
+            const shareModal = setupModal('share-modal', 'open-share-modal');
+            const productModal = setupModal('product-modal', 'add-product-btn');
+            const cartModal = setupModal('cart-modal', 'open-cart-modal');
+            const videoGalleryModal = setupModal('video-gallery-modal');
+            const videoModal = setupModal('video-modal', 'add-video-btn');
+            const locationModal = setupModal('location-modal');
+            
+            // --- Lógica Específica del Modal Jurídico (SOLICITAR INFO) ---
+             function attachInfoButtonsListener() {
+                document.querySelectorAll('.service-card .card-button').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const card = this.closest('.service-card');
+                        const serviceName = card.querySelector('h3').textContent;
+                        if (infoModal) {
+                            document.getElementById('info-modal-title').textContent = `Consulta sobre ${serviceName}`;
+                            document.getElementById('info-service-type').value = serviceName;
+                            infoModal.style.display = 'block';
+                        }
+                    });
+                });
+            }
+
+
+            // --- Lógica de Envío de Formularios ---
+            const infoForm = document.getElementById('info-form');
+            if (infoForm) {
+                infoForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    const service = document.getElementById('info-service-type').value;
+                    const nombre = infoForm.querySelector('#nombre').value;
+                    const celular = infoForm.querySelector('#celular').value;
+                    const consulta = infoForm.querySelector('#consulta').value;
+                    
+                    const adminWhatsapp = "51988069100";
+                    const message = `*Nueva Consulta: ${service}*%0A%0A- *Cliente:* ${nombre}%0A- *Celular de Contacto:* ${celular}%0A- *Consulta:* ${consulta || 'No especificada'}`;
+                    const whatsappUrl = `https://wa.me/${adminWhatsapp}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+
+                    if (infoModal) infoModal.style.display = 'none';
+                    infoForm.reset();
+                });
+            }
+            
+            const shareForm = document.getElementById('share-form');
+            if (shareForm) {
+                shareForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const whatsappNumberInput = document.getElementById('whatsapp-number');
+                    const phoneNumber = whatsappNumberInput.value;
+
+                    if (!/^[0-9]{9}$/.test(phoneNumber)) {
+                        alert('Por favor, ingrese un número de celular peruano válido de 9 dígitos.');
+                        return;
+                    }
+
+                    const countryCode = "51";
+                    const fullNumber = countryCode + phoneNumber;
+                    
+                    const message = `*ESTUDIO JURIDICO & CONTABLE ASOCIADOS*\n\nTe comparto la tarjeta de presentación virtual, puedes visitarla aquí:\n${window.location.href}`;
+                    const encodedMessage = encodeURIComponent(message);
+                    
+                    const whatsappUrl = `https://wa.me/${fullNumber}?text=${encodedMessage}`;
+                    
+                    window.open(whatsappUrl, '_blank');
+
+                    if (shareModal) shareModal.style.display = 'none';
+                    shareForm.reset();
+                });
+            }
+
+            // --- LÓGICA DE ADMIN Y DATOS ---
+            let products = [];
+            let allServices = {};
+            let videoGalleryItems = [];
+            let siteLocation = {};
+            let cart = [];
+            let isAdminLoggedIn = false;
+            let currentServiceForGallery = 'juridico'; // Default
+            
+            // --- GESTIÓN DE SERVICIOS (JURIDICO, CONTABLE, AMBIENTAL) ---
+            const serviceForm = document.getElementById('service-form');
+
+            function getServiceData(serviceType) {
+                 const stored = localStorage.getItem(`${serviceType}Services`);
+                if (stored) {
+                    return JSON.parse(stored);
+                }
+                // Default data if none exists
+                switch(serviceType) {
+                    case 'juridico': return [ { id: 1, title: 'Derecho Penal', image: 'https://placehold.co/400x300/1E8449/FFFFFF?text=Derecho+Penal', description: 'Defensa en todas las etapas del proceso penal.', details: 'Asistencia en delitos contra la persona.\nDefensa en casos de patrimonio.\nRepresentación ante la administración pública.' }];
+                    case 'contable': return [ { id: 1, title: 'Constitución de Empresas', image: 'https://placehold.co/400x300/943126/FFFFFF?text=Empresas', description: 'Le guiamos en todo el proceso de formalización de su empresa.', details: 'Elección del tipo societario.\nInscripción en registros públicos.' } ];
+                    case 'ambiental': return [ { id: 1, title: 'Impacto Ambiental', image: 'https://placehold.co/400x300/27AE60/FFFFFF?text=EIA', description: 'Elaboramos estudios de impacto ambiental (EIA) para proyectos.', details: 'Aseguramos viabilidad y cumplimiento legal.' }];
+                    default: return [];
+                }
+            }
+
+            function saveServices(serviceType) {
+                localStorage.setItem(`${serviceType}Services`, JSON.stringify(allServices[serviceType]));
+            }
+
+            function renderServices(serviceType) {
+                const container = document.getElementById(`${serviceType}-cards-container`);
+                if (!container) return;
+                
+                container.innerHTML = '';
+                allServices[serviceType].forEach(service => {
+                    const card = document.createElement('div');
+                    card.className = 'service-card';
+                    const detailsHtml = service.details ? `<ul><li>${service.details.replace(/\n/g, '</li><li>')}</li></ul>` : '';
+
+                    card.innerHTML = `
+                        ${isAdminLoggedIn ? `
+                        <div class="admin-controls">
+                            <button class="admin-btn service-edit-btn" data-id="${service.id}" data-service="${serviceType}"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="admin-btn delete-btn service-delete-btn" data-id="${service.id}" data-service="${serviceType}"><i class="fas fa-trash"></i></button>
+                        </div>` : ''}
+                        <img src="${service.image}" alt="${service.title}" class="card-image" onerror="this.onerror=null;this.src='https://placehold.co/400x300/cccccc/ffffff?text=Imagen';">
+                        <h3>${service.title}</h3>
+                        <p>${service.description}</p>
+                        <div class="service-details">${detailsHtml}</div>
+                        <div class="service-card-footer">
+                            <button class="card-button">Solicitar Información</button>
+                            ${service.details ? `<button class="details-toggle-btn"><i class="fas fa-chevron-down"></i></button>` : ''}
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+                attachInfoButtonsListener();
+            }
+
+            document.querySelectorAll('.add-service-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const serviceType = this.dataset.service;
+                    if (serviceModal) {
+                        document.getElementById('service-modal-title').textContent = 'Agregar Nuevo Servicio';
+                        serviceForm.reset();
+                        serviceForm.querySelector('#service-id').value = '';
+                        serviceForm.querySelector('#service-type-field').value = serviceType;
+                        serviceModal.style.display = 'block';
+                    }
+                });
+            });
+
+            document.querySelector('main').addEventListener('click', (e) => {
+                 const editBtn = e.target.closest('.service-edit-btn');
+                 if (editBtn) {
+                    const serviceId = parseInt(editBtn.dataset.id);
+                    const serviceType = editBtn.dataset.service;
+                    const service = allServices[serviceType].find(s => s.id === serviceId);
+                    if (service && serviceModal) {
+                        document.getElementById('service-modal-title').textContent = 'Editar Servicio';
+                        serviceForm.querySelector('#service-id').value = service.id;
+                        serviceForm.querySelector('#service-type-field').value = serviceType;
+                        serviceForm.querySelector('#service-title').value = service.title;
+                        serviceForm.querySelector('#service-image').value = service.image;
+                        serviceForm.querySelector('#service-description').value = service.description;
+                        serviceForm.querySelector('#service-details').value = service.details || '';
+                        serviceModal.style.display = 'block';
+                    }
+                 }
+
+                 const deleteBtn = e.target.closest('.service-delete-btn');
+                 if (deleteBtn) {
+                     const serviceId = parseInt(deleteBtn.dataset.id);
+                     const serviceType = deleteBtn.dataset.service;
+                      if (confirm('¿Estás seguro de que quieres eliminar este servicio?')) {
+                        allServices[serviceType] = allServices[serviceType].filter(s => s.id !== serviceId);
+                        saveServices(serviceType);
+                        renderServices(serviceType);
+                    }
+                 }
+
+                 const toggleBtn = e.target.closest('.details-toggle-btn');
+                 if (toggleBtn) {
+                     const detailsDiv = toggleBtn.closest('.service-card').querySelector('.service-details');
+                     toggleBtn.classList.toggle('active');
+                     detailsDiv.style.maxHeight = detailsDiv.style.maxHeight ? null : `${detailsDiv.scrollHeight}px`;
+                 }
+            });
+            
+             if (serviceForm) {
+                serviceForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const id = document.getElementById('service-id').value;
+                    const serviceType = document.getElementById('service-type-field').value;
+                    const serviceData = {
+                        title: document.getElementById('service-title').value,
+                        image: document.getElementById('service-image').value,
+                        description: document.getElementById('service-description').value,
+                        details: document.getElementById('service-details').value,
+                    };
+
+                    if (id) { // Editing
+                        const index = allServices[serviceType].findIndex(s => s.id == id);
+                        allServices[serviceType][index] = { ...allServices[serviceType][index], ...serviceData };
+                    } else { // Adding
+                        serviceData.id = Date.now();
+                        allServices[serviceType].push(serviceData);
+                    }
+
+                    saveServices(serviceType);
+                    renderServices(serviceType);
+                    serviceForm.reset();
+                    if (serviceModal) serviceModal.style.display = 'none';
+                });
+            }
+
+
+            // --- GESTIÓN DE PRODUCTOS TIENDA ---
+            const productGrid = document.getElementById('product-grid');
+            const productForm = document.getElementById('product-form');
+            const promotionGrid = document.getElementById('promotion-grid');
+            const promotionSection = document.getElementById('promotion-section');
+
+            function saveProducts() {
+                localStorage.setItem('tiendaVirtualProducts', JSON.stringify(products));
+            }
+
+            function renderProducts(filter = 'All') {
+                const filteredProducts = (filter === 'All') ? products : products.filter(p => p.category === filter);
+                
+                productGrid.innerHTML = '';
+                filteredProducts.forEach((product) => {
+                    productGrid.appendChild(createProductCard(product));
+                });
+                
+                const promoProducts = products.filter(p => p.promotion);
+                promotionGrid.innerHTML = '';
+                if(promoProducts.length > 0) {
+                    promotionSection.style.display = 'block';
+                    promoProducts.forEach(product => {
+                         promotionGrid.appendChild(createProductCard(product));
+                    });
+                } else {
+                    promotionSection.style.display = 'none';
+                }
+
+                attachCardEventListeners();
+            }
+
+            function createProductCard(product) {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x300/cccccc/ffffff?text=Imagen+no+disponible';">
+                    <h3>${product.title}</h3>
+                    <p>${product.description}</p>
+                    <div class="product-price">S/ ${product.price}</div>
+                    <button class="card-button buy-btn" data-id="${product.id}">Comprar</button>
+                    ${isAdminLoggedIn ? `<button class="product-delete-btn delete-btn" data-id="${product.id}"><i class="fas fa-trash"></i></button>` : ''}
+                `;
+                return card;
+            }
+
+            function attachCardEventListeners() {
+                document.querySelectorAll('.product-delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        if (confirm('¿Estás seguro de que quieres eliminar este producto?')) {
+                            products = products.filter(p => p.id !== productId);
+                            saveProducts();
+                            renderProducts(document.querySelector('.filter-btn.active').dataset.category);
+                        }
+                    });
+                });
+                document.querySelectorAll('.buy-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                         const productId = parseInt(this.getAttribute('data-id'));
+                         addToCart(productId);
+                    });
+                });
+            }
+
+            function loadProducts() {
+                const storedProducts = localStorage.getItem('tiendaVirtualProducts');
+                if (storedProducts) {
+                    products = JSON.parse(storedProducts);
+                } else {
+                    products = [
+                        { id: 1, image: 'https://placehold.co/400x300/2980b9/FFF?text=Data+Mining', title: 'Servicio de Data Mining', description: 'Extracción y análisis de grandes volúmenes de datos para encontrar patrones.', price: '150.00', category: 'Buscar Información', promotion: true },
+                        { id: 2, image: 'https://placehold.co/400x300/3498db/FFF?text=Licencia+Software', title: 'Licencia de Software PRO', description: 'Licencia anual para nuestro software de gestión profesional.', price: '500.00', category: 'Licencias', promotion: false },
+                        { id: 3, image: 'https://placehold.co/400x300/00A7B5/FFF?text=Suscripción+Streaming', title: 'Suscripción Premium Streaming', description: 'Acceso ilimitado a nuestra plataforma de contenido exclusivo por un mes.', price: '45.50', category: 'Streaming', promotion: true }
+                    ];
+                }
+                renderProducts();
+            }
+            
+            function updateAdminView() {
+                isAdminLoggedIn = sessionStorage.getItem('isAdminLoggedIn') === 'true';
+                
+                document.getElementById('open-login-modal').style.display = isAdminLoggedIn ? 'none' : 'inline-block';
+                document.getElementById('logout-btn').style.display = isAdminLoggedIn ? 'inline-block' : 'none';
+
+                document.querySelectorAll('.admin-only').forEach(el => {
+                    el.style.display = isAdminLoggedIn ? 'block' : 'none';
+                });
+
+                renderProducts(document.querySelector('.filter-btn.active')?.dataset.category || 'All');
+                ['juridico', 'contable', 'ambiental'].forEach(renderServices);
+                renderVideos(currentServiceForGallery);
+            }
+
+            if(productForm) {
+                productForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const newProduct = {
+                        id: Date.now(),
+                        image: document.getElementById('product-image').value,
+                        title: document.getElementById('product-title').value,
+                        description: document.getElementById('product-description').value,
+                        price: parseFloat(document.getElementById('product-price').value).toFixed(2),
+                        category: document.getElementById('product-category').value,
+                        promotion: document.getElementById('product-promotion').checked
+                    };
+                    products.push(newProduct);
+                    saveProducts();
+                    renderProducts();
+                    productForm.reset();
+                    if(productModal) productModal.style.display = 'none';
+                });
+            }
+            
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+
+                    if (email === 'diderotec@gmail.com' && password === '123456789') {
+                        sessionStorage.setItem('isAdminLoggedIn', 'true');
+                        updateAdminView();
+                        if (loginModal) loginModal.style.display = 'none';
+                        loginForm.reset();
+                    } else {
+                        alert('Credenciales incorrectas.');
+                    }
+                });
+            }
+
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    sessionStorage.removeItem('isAdminLoggedIn');
+                    updateAdminView();
+                    switchPage('intro-page');
+                });
+            }
+
+            // --- GESTIÓN DE GALERÍA DE VIDEOS ---
+            const videoGrid = document.getElementById('video-grid-modal');
+            const featuredVideoGrid = document.getElementById('featured-video-grid-modal');
+            const featuredVideoSection = document.getElementById('featured-video-section-modal');
+            const videoForm = document.getElementById('video-form');
+            const videoModalEl = document.getElementById('video-modal');
+
+            function getYoutubeVideoId(url) {
+                const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+                const match = url.match(regex);
+                return match ? match[1] : null;
+            }
+
+            function getEmbedUrl(url) {
+                const youtubeId = getYoutubeVideoId(url);
+                if (youtubeId) {
+                    return `https://www.youtube.com/embed/${youtubeId}`;
+                }
+
+                const driveRegex = /drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)/;
+                const driveMatch = url.match(driveRegex);
+                if (driveMatch && driveMatch[1]) {
+                    return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+                }
+                
+                return '';
+            }
+
+            function saveVideos() {
+                localStorage.setItem('videoGalleryItems', JSON.stringify(videoGalleryItems));
+            }
+
+            function renderVideos(service) {
+                const filteredVideos = videoGalleryItems.filter(v => v.service === service);
+                videoGrid.innerHTML = '';
+                featuredVideoGrid.innerHTML = '';
+
+                const featuredVideos = filteredVideos.filter(v => v.featured);
+                if (featuredVideos.length > 0) {
+                    featuredVideoSection.style.display = 'block';
+                    featuredVideos.forEach(video => featuredVideoGrid.appendChild(createVideoCard(video)));
+                } else {
+                    featuredVideoSection.style.display = 'none';
+                }
+
+                const nonFeaturedVideos = filteredVideos.filter(v => !v.featured);
+                nonFeaturedVideos.forEach(video => {
+                    videoGrid.appendChild(createVideoCard(video));
+                });
+            }
+
+            function createVideoCard(video) {
+                const embedUrl = getEmbedUrl(video.url);
+                if (!embedUrl) return document.createDocumentFragment();
+
+                const card = document.createElement('div');
+                card.className = 'video-card';
+
+                const youtubeId = getYoutubeVideoId(video.url);
+                const thumbnailUrl = video.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : 'https://placehold.co/400x300/cccccc/ffffff?text=Video');
+
+                card.innerHTML = `
+                    ${isAdminLoggedIn ? `
+                    <div class="admin-controls">
+                        <button class="admin-btn video-edit-btn" data-id="${video.id}"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="admin-btn delete-btn video-delete-btn" data-id="${video.id}"><i class="fas fa-trash"></i></button>
+                    </div>` : ''}
+                    <div class="video-player-container" data-embed-url="${embedUrl}">
+                        <img src="${thumbnailUrl}" alt="Miniatura del video" onerror="this.onerror=null;this.src='https://placehold.co/400x300/cccccc/ffffff?text=Video';">
+                        <div class="play-button-overlay"><i class="fas fa-play-circle"></i></div>
+                    </div>
+                    <div class="video-card-title">${video.title}</div>
+                `;
+                return card;
+            }
+            
+            function loadVideos() {
+                const storedVideos = localStorage.getItem('videoGalleryItems');
+                if (storedVideos) {
+                    videoGalleryItems = JSON.parse(storedVideos);
+                } else {
+                    videoGalleryItems = [
+                         { id: 1, title: "Caso de Éxito: Derecho Penal", url: "https://www.youtube.com/watch?v=aqz-KE-bpKQ", thumbnail: "", featured: true, service: 'juridico' },
+                         { id: 2, title: "Tutorial: Declaración Anual", url: "https://www.youtube.com/watch?v=aqz-KE-bpKQ", thumbnail: "", featured: false, service: 'contable' }
+                    ];
+                }
+            }
+
+            if (videoForm) {
+                videoForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const videoId = document.getElementById('video-id').value;
+                    const videoData = {
+                        title: document.getElementById('video-title').value,
+                        url: document.getElementById('video-url').value,
+                        thumbnail: document.getElementById('video-thumbnail').value,
+                        service: document.getElementById('video-service').value,
+                        featured: document.getElementById('video-featured').checked
+                    };
+                     if (videoId) { // Es una edición
+                        const index = videoGalleryItems.findIndex(v => v.id == videoId);
+                        if (index !== -1) {
+                            videoGalleryItems[index] = { ...videoGalleryItems[index], ...videoData };
+                        }
+                    } else { // Es nuevo
+                        videoData.id = Date.now();
+                        videoGalleryItems.push(videoData);
+                    }
+                    saveVideos();
+                    currentServiceForGallery = videoData.service;
+                    renderVideos(currentServiceForGallery);
+                    videoForm.reset();
+                    if(videoModalEl) videoModalEl.style.display = 'none';
+                    if(videoGalleryModal) videoGalleryModal.style.display = 'block';
+                });
+            }
+
+            document.querySelectorAll('.open-video-gallery-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    currentServiceForGallery = this.dataset.service;
+                    renderVideos(currentServiceForGallery);
+                    if (videoGalleryModal) {
+                        videoGalleryModal.style.display = 'block';
+                    }
+                });
+            });
+
+            document.getElementById('add-video-btn')?.addEventListener('click', () => {
+                if (videoModalEl) {
+                    if(videoGalleryModal) videoGalleryModal.style.display = 'none';
+                    videoForm.reset();
+                    document.getElementById('video-modal-title').textContent = 'Agregar Nuevo Video';
+                    document.getElementById('video-id').value = '';
+                    document.getElementById('video-service').value = currentServiceForGallery;
+                    videoModalEl.style.display = 'block';
+                }
+            });
+            
+            const videoGalleryContent = document.querySelector('#video-gallery-modal .content-section');
+            if (videoGalleryContent) {
+                videoGalleryContent.addEventListener('click', function(e) {
+                    const playerContainer = e.target.closest('.video-player-container');
+                    if (playerContainer && !playerContainer.querySelector('iframe')) {
+                        const embedUrl = playerContainer.dataset.embedUrl;
+                        playerContainer.innerHTML = `<iframe src="${embedUrl}?autoplay=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                        return;
+                    }
+
+                    const editBtn = e.target.closest('.video-edit-btn');
+                    if (editBtn) {
+                        const videoId = parseInt(editBtn.dataset.id);
+                        const video = videoGalleryItems.find(v => v.id === videoId);
+                        if (video) {
+                            document.getElementById('video-modal-title').textContent = 'Editar Video';
+                            videoForm.querySelector('#video-id').value = video.id;
+                            videoForm.querySelector('#video-title').value = video.title;
+                            videoForm.querySelector('#video-url').value = video.url;
+                            videoForm.querySelector('#video-thumbnail').value = video.thumbnail || '';
+                            videoForm.querySelector('#video-service').value = video.service;
+                            videoForm.querySelector('#video-featured').checked = video.featured;
+
+                            if (videoGalleryModal) videoGalleryModal.style.display = 'none';
+                            if (videoModalEl) videoModalEl.style.display = 'block';
+                        }
+                        return;
+                    }
+                    
+                    const deleteBtn = e.target.closest('.video-delete-btn');
+                    if (deleteBtn) {
+                        const videoId = parseInt(deleteBtn.dataset.id);
+                        if (confirm('¿Estás seguro de que quieres eliminar este video?')) {
+                            videoGalleryItems = videoGalleryItems.filter(v => v.id !== videoId);
+                            saveVideos();
+                            renderVideos(currentServiceForGallery);
+                        }
+                        return;
+                    }
+                });
+            }
+
+            // --- GESTIÓN DE UBICACIÓN ---
+            const locationForm = document.getElementById('location-form');
+            function saveLocation() {
+                localStorage.setItem('siteLocation', JSON.stringify(siteLocation));
+            }
+            function loadLocation() {
+                const storedLocation = localStorage.getItem('siteLocation');
+                if (storedLocation) {
+                    siteLocation = JSON.parse(storedLocation);
+                } else {
+                     siteLocation = {
+                        title: 'Plaza de Armas de Juliaca',
+                        url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3845.895311933931!2d-70.1302306856754!3d-15.49079198927581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9167f339486c7d2b%3A0x442654359691884!2sPlaza%20de%20Armas%20de%20Juliaca!5e0!3m2!1ses-419!2spe!4v1673887345123!5m2!1ses-419!2spe'
+                    };
+                }
+                document.getElementById('location-title').textContent = siteLocation.title;
+                document.querySelector('#map-container iframe').src = siteLocation.url;
+            }
+
+            if(locationForm){
+                locationForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    siteLocation = {
+                        title: document.getElementById('location-form-title').value,
+                        url: document.getElementById('location-form-url').value
+                    };
+                    saveLocation();
+                    loadLocation();
+                    if(locationModal) locationModal.style.display = 'none';
+                });
+            }
+             document.getElementById('edit-location-btn')?.addEventListener('click', () => {
+                document.getElementById('location-form-title').value = siteLocation.title || '';
+                document.getElementById('location-form-url').value = siteLocation.url || '';
+                if (locationModal) locationModal.style.display = 'block';
+            });
+
+            // --- Lógica del Carrito de Compras ---
+            const cartItemsList = document.getElementById('cart-items-list');
+            const cartTotalEl = document.getElementById('cart-total');
+            const cartCountEl = document.querySelector('.cart-count');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            function addToCart(productId) {
+                const product = products.find(p => p.id === productId);
+                const cartItem = cart.find(item => item.id === productId);
+
+                if(cartItem) {
+                    cartItem.quantity++;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                updateCart();
+            }
+
+            function updateCart() {
+                renderCartItems();
+                updateCartTotal();
+                updateCartIcon();
+            }
+
+            function renderCartItems() {
+                cartItemsList.innerHTML = '';
+                cart.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div class="cart-item-info">
+                            <span>${item.title}</span>
+                            <span>S/ ${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button class="decrease-qty-btn" data-id="${item.id}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="increase-qty-btn" data-id="${item.id}">+</button>
+                            <button class="remove-item-btn" data-id="${item.id}"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                    cartItemsList.appendChild(li);
+                });
+            }
+
+            cartItemsList.addEventListener('click', function(e) {
+                const target = e.target.closest('button');
+                if(!target) return;
+
+                const id = parseInt(target.dataset.id);
+                
+                if(target.classList.contains('increase-qty-btn')) {
+                    const item = cart.find(i => i.id === id);
+                    if(item) item.quantity++;
+                } else if (target.classList.contains('decrease-qty-btn')) {
+                     const item = cart.find(i => i.id === id);
+                     if(item && item.quantity > 1) {
+                         item.quantity--;
+                     } else {
+                         cart = cart.filter(i => i.id !== id);
+                     }
+                } else if (target.classList.contains('remove-item-btn')) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+                updateCart();
+            });
+
+            function updateCartTotal() {
+                const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                cartTotalEl.textContent = `Total: S/ ${total.toFixed(2)}`;
+            }
+
+            function updateCartIcon() {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                if (totalItems > 0) {
+                    cartCountEl.textContent = totalItems;
+                    cartCountEl.style.display = 'flex';
+                } else {
+                    cartCountEl.style.display = 'none';
+                }
+            }
+            
+            if(checkoutBtn) {
+                checkoutBtn.addEventListener('click', () => {
+                    if (cart.length === 0) {
+                        alert('Tu carrito está vacío.');
+                        return;
+                    }
+                    
+                    let message = '*¡Hola! Deseo realizar el siguiente pedido:*\n\n';
+                    cart.forEach(item => {
+                        message += `*-* ${item.quantity} x ${item.title} - S/ ${(item.price * item.quantity).toFixed(2)}\n`;
+                    });
+                    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                    message += `\n*TOTAL: S/ ${total.toFixed(2)}*\n\n`;
+                    message += '_NOTA: Todo pago se realiza por YAPE._';
+
+                    const adminWhatsapp = "51919757542";
+                    const whatsappUrl = `https://wa.me/${adminWhatsapp}?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+
+                    cart = [];
+                    updateCart();
+                    if(cartModal) cartModal.style.display = 'none';
+                });
+            }
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const category = this.getAttribute('data-category');
+                    renderProducts(category);
+                });
+            });
+
+            const addMoreProductsBtn = document.getElementById('add-more-products-btn');
+            if (addMoreProductsBtn) {
+                addMoreProductsBtn.addEventListener('click', () => {
+                    if (cartModal) cartModal.style.display = 'none';
+                    switchPage('digital-page');
+                });
+            }
+
+            // --- INICIALIZACIÓN ---
+            function initializeApp() {
+                ['juridico', 'contable', 'ambiental'].forEach(serviceType => {
+                    allServices[serviceType] = getServiceData(serviceType);
+                });
+                loadProducts();
+                loadVideos();
+                loadLocation();
+                updateAdminView();
+            }
+
+            initializeApp();
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
