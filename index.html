@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta descripción para SEO -->
+    <meta name="description" content="Estudio Jurídico y Contable en Juliaca. Ofrecemos asesoría legal, servicios contables, ingeniería ambiental y una tienda de servicios digitales.">
     <title>Estudio Jurídico & Contable</title>
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -658,7 +660,8 @@
         .video-player-container {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            /* El padding-top se aplica dinámicamente con JS */
+            background-color: #000;
             cursor: pointer;
         }
         .video-player-container img {
@@ -863,7 +866,7 @@
             border-radius: 10px;
         }
         
-        #qrcode-container img {
+        #qrcode img {
             border-radius: 5px;
         }
 
@@ -957,6 +960,32 @@
         .share-btn:hover::before {
             left: 150%;
         }
+
+        /* --- Social Media Icons --- */
+        .social-media-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .social-icon-btn {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon-btn:hover {
+            background-color: var(--digital-primary);
+            transform: scale(1.1);
+        }
         
         /* Product card specific styles */
         .product-card img {
@@ -986,20 +1015,8 @@
             display: none;
         }
         
-        .product-delete-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--contable-primary);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 1rem;
-            cursor: pointer;
-            line-height: 30px;
-        }
+        /* Se elimina el posicionamiento específico para que use .admin-controls */
+        /* .product-delete-btn { ... } */
         
         .category-filters {
             display: flex;
@@ -1183,7 +1200,8 @@
 
             .footer-bottom-bar {
                 flex-direction: column;
-                gap: 10px;
+                gap: 20px;
+                align-items: center;
             }
             .footer-buttons-container {
                 justify-content: center;
@@ -1256,7 +1274,7 @@
 
         <!-- PÁGINA DE SERVICIOS JURÍDICOS -->
         <div id="juridico-page" class="page">
-            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <button class="back-button" data-page="intro-page" aria-label="Volver a la página de inicio"><i class="fas fa-arrow-left"></i></button>
             <div class="service-page-container">
                 <section class="hero">
                     <h1>Nuestros Servicios Jurídicos</h1>
@@ -1280,7 +1298,7 @@
 
         <!-- PÁGINA DE SERVICIOS CONTABLES -->
         <div id="contable-page" class="page">
-            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <button class="back-button" data-page="intro-page" aria-label="Volver a la página de inicio"><i class="fas fa-arrow-left"></i></button>
             <div class="service-page-container">
                 <section class="hero">
                     <h1>Nuestros Servicios Contables</h1>
@@ -1304,7 +1322,7 @@
 
         <!-- PÁGINA DE SERVICIOS DIGITALES (TIENDA) -->
         <div id="digital-page" class="page">
-            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <button class="back-button" data-page="intro-page" aria-label="Volver a la página de inicio"><i class="fas fa-arrow-left"></i></button>
             <div class="service-page-container">
                  <section class="hero">
                     <h1>Tienda Virtual de Servicios Digitales</h1>
@@ -1335,7 +1353,7 @@
         
         <!-- PÁGINA DE INGENIERÍA AMBIENTAL -->
         <div id="ambiental-page" class="page">
-            <button class="back-button" data-page="intro-page"><i class="fas fa-arrow-left"></i></button>
+            <button class="back-button" data-page="intro-page" aria-label="Volver a la página de inicio"><i class="fas fa-arrow-left"></i></button>
             <div class="service-page-container">
                  <section class="hero">
                     <h1>Servicios de Ingeniería Ambiental</h1>
@@ -1366,11 +1384,18 @@
             <h2 class="section-title">Nuestra Ubicación</h2>
             <h3 id="location-title" style="font-weight: 400; margin-top: -30px; margin-bottom: 20px;"></h3>
             <div class="map-container" id="map-container">
+                <!-- MAPA CORREGIDO -->
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3845.895311933931!2d-70.1302306856754!3d-15.49079198927581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9167f339486c7d2b%3A0x442654359691884!2sPlaza%20de%20Armas%20de%20Juliaca!5e0!3m2!1ses-419!2spe!4v1673887345123!5m2!1ses-419!2spe" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
         <div class="footer-bottom-bar">
+            <div class="social-media-container">
+                <a href="#" target="_blank" id="social-link-facebook" class="social-icon-btn" style="display: none;" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" id="social-link-youtube" class="social-icon-btn" style="display: none;" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" target="_blank" id="social-link-tiktok" class="social-icon-btn" style="display: none;" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
             <div class="footer-buttons-container">
+                 <button class="share-btn admin-only" id="edit-social-links-btn" style="background-color: var(--digital-primary);">Editar Redes</button>
                  <button class="share-btn" id="open-share-modal">Compartir Tarjeta <i class="fas fa-share-alt"></i></button>
             </div>
             <div class="visitor-counter">
@@ -1480,7 +1505,7 @@
         <div class="modal-content">
             <h2>Nuestra Tarjeta Virtual</h2>
             <div id="qrcode-container">
-                <div id="qrcode"></div>
+                 <div id="qrcode"></div>
             </div>
             <p class="share-instructions" style="text-align: center; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); line-height: 1.5; margin: 10px 0 20px 0;">
                 Escanea el código QR o ingresa un número para compartir el enlace por WhatsApp.
@@ -1500,6 +1525,7 @@
         <div class="modal-content">
             <h2 id="product-modal-title">Agregar Nuevo Producto</h2>
             <form id="product-form" class="modal-form">
+                <input type="hidden" id="product-id" name="id">
                 <label for="product-image">URL de la Imagen:</label>
                 <input type="url" id="product-image" name="image" required placeholder="https://ejemplo.com/imagen.jpg">
                 <label for="product-title">Título del Producto:</label>
@@ -1542,6 +1568,13 @@
                     <option value="contable">Estudio Contable</option>
                     <option value="digital">Tienda Virtual</option>
                     <option value="ambiental">Ing. Ambiental</option>
+                </select>
+                <label for="video-aspect-ratio">Formato del Video:</label>
+                <select id="video-aspect-ratio" name="aspect-ratio" required>
+                    <option value="16:9" selected>Horizontal (16:9 - YouTube, TV)</option>
+                    <option value="4:3">Estándar (4:3 - Clásico)</option>
+                    <option value="9:16">Vertical (9:16 - Shorts, TikTok)</option>
+                    <option value="1:1">Cuadrado (1:1 - Instagram)</option>
                 </select>
                 <div class="checkbox-group">
                     <input type="checkbox" id="video-featured" name="featured">
@@ -1592,6 +1625,41 @@
         </div>
     </div>
 
+    <!-- MODAL PARA EDITAR REDES SOCIALES -->
+    <div id="social-links-modal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Enlaces de Redes Sociales</h2>
+            <form id="social-links-form" class="modal-form">
+                <!-- Facebook -->
+                <label for="social-facebook-url">Facebook URL:</label>
+                <input type="url" id="social-facebook-url" name="facebook-url" placeholder="https://facebook.com/tu-pagina">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="social-facebook-show" name="facebook-show">
+                    <label for="social-facebook-show">Mostrar ícono de Facebook</label>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
+                <!-- YouTube -->
+                <label for="social-youtube-url">YouTube URL:</label>
+                <input type="url" id="social-youtube-url" name="youtube-url" placeholder="https://youtube.com/tu-canal">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="social-youtube-show" name="youtube-show">
+                    <label for="social-youtube-show">Mostrar ícono de YouTube</label>
+                </div>
+                <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
+                <!-- TikTok -->
+                <label for="social-tiktok-url">TikTok URL:</label>
+                <input type="url" id="social-tiktok-url" name="tiktok-url" placeholder="https://tiktok.com/@tu-usuario">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="social-tiktok-show" name="tiktok-show">
+                    <label for="social-tiktok-show">Mostrar ícono de TikTok</label>
+                </div>
+
+                <button type="submit" class="modal-submit-button">Guardar Enlaces</button>
+            </form>
+            <button type="button" class="modal-close-btn">Cerrar</button>
+        </div>
+    </div>
+
 
     <!-- MODAL PARA CARRITO DE COMPRAS -->
     <div id="cart-modal" class="modal">
@@ -1613,7 +1681,7 @@
     <!-- Botones Flotantes -->
     <div class="fab-container">
         <div class="cart-fab">
-            <button class="fab-btn cart-icon" id="open-cart-modal">
+            <button class="fab-btn cart-icon" id="open-cart-modal" aria-label="Abrir carrito de compras">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="cart-count" style="display: none;">0</span>
             </button>
@@ -1680,15 +1748,7 @@
                     } else {
                         cartFab.style.display = 'none';
                     }
-                    // --- Scroll Logic ---
                     if (pageId !== 'intro-page') {
-                        const sectionToScroll = targetPage.querySelector('.content-section');
-                        if (sectionToScroll) {
-                            setTimeout(() => {
-                                sectionToScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }, 100); 
-                        }
-                    } else {
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 }
@@ -1794,6 +1854,7 @@
             const videoModal = setupModal('video-modal', 'add-video-btn');
             const locationModal = setupModal('location-modal');
             const communicationChoiceModal = setupModal('communication-choice-modal');
+            const socialLinksModal = setupModal('social-links-modal', 'edit-social-links-btn');
             
             // --- Lógica Específica del Modal Jurídico (SOLICITAR INFO) ---
              function attachInfoButtonsListener() {
@@ -1859,11 +1920,13 @@
                 });
             }
 
+
             // --- LÓGICA DE ADMIN Y DATOS ---
             let products = [];
             let allServices = {};
             let videoGalleryItems = [];
             let siteLocation = {};
+            let socialLinks = {};
             let cart = [];
             let isAdminLoggedIn = false;
             let currentServiceForGallery = 'juridico'; // Default
@@ -1902,8 +1965,8 @@
                     card.innerHTML = `
                         ${isAdminLoggedIn ? `
                         <div class="admin-controls">
-                            <button class="admin-btn service-edit-btn" data-id="${service.id}" data-service="${serviceType}"><i class="fas fa-pencil-alt"></i></button>
-                            <button class="admin-btn delete-btn service-delete-btn" data-id="${service.id}" data-service="${serviceType}"><i class="fas fa-trash"></i></button>
+                            <button class="admin-btn service-edit-btn" data-id="${service.id}" data-service="${serviceType}" aria-label="Editar servicio"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="admin-btn delete-btn service-delete-btn" data-id="${service.id}" data-service="${serviceType}" aria-label="Eliminar servicio"><i class="fas fa-trash"></i></button>
                         </div>` : ''}
                         <img src="${service.image}" alt="${service.title}" class="card-image" onerror="this.onerror=null;this.src='https://placehold.co/400x300/cccccc/ffffff?text=Imagen';">
                         <h3>${service.title}</h3>
@@ -1911,7 +1974,7 @@
                         <div class="service-details">${detailsHtml}</div>
                         <div class="service-card-footer">
                             <button class="card-button">Solicitar Información</button>
-                            ${service.details ? `<button class="details-toggle-btn"><i class="fas fa-chevron-down"></i></button>` : ''}
+                            ${service.details ? `<button class="details-toggle-btn" aria-label="Ver más detalles"><i class="fas fa-chevron-down"></i></button>` : ''}
                         </div>
                     `;
                     container.appendChild(card);
@@ -2038,7 +2101,12 @@
                     <p>${product.description}</p>
                     <div class="product-price">S/ ${product.price}</div>
                     <button class="card-button buy-btn" data-id="${product.id}">Comprar</button>
-                    ${isAdminLoggedIn ? `<button class="product-delete-btn delete-btn" data-id="${product.id}"><i class="fas fa-trash"></i></button>` : ''}
+                    ${isAdminLoggedIn ? `
+                    <div class="admin-controls">
+                        <button class="admin-btn product-edit-btn" data-id="${product.id}" aria-label="Editar producto"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="admin-btn delete-btn product-delete-btn" data-id="${product.id}" aria-label="Eliminar producto"><i class="fas fa-trash"></i></button>
+                    </div>
+                    ` : ''}
                 `;
                 return card;
             }
@@ -2054,6 +2122,25 @@
                         }
                     });
                 });
+
+                document.querySelectorAll('.product-edit-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const productId = parseInt(this.getAttribute('data-id'));
+                        const product = products.find(p => p.id === productId);
+                        if (product && productModal) {
+                            document.getElementById('product-modal-title').textContent = 'Editar Producto';
+                            productForm.querySelector('#product-id').value = product.id;
+                            productForm.querySelector('#product-image').value = product.image;
+                            productForm.querySelector('#product-title').value = product.title;
+                            productForm.querySelector('#product-description').value = product.description;
+                            productForm.querySelector('#product-price').value = product.price;
+                            productForm.querySelector('#product-category').value = product.category;
+                            productForm.querySelector('#product-promotion').checked = product.promotion;
+                            productModal.style.display = 'block';
+                        }
+                    });
+                });
+
                 document.querySelectorAll('.buy-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                          const productId = parseInt(this.getAttribute('data-id'));
@@ -2076,26 +2163,11 @@
                 renderProducts();
             }
             
-            function updateAdminView() {
-                isAdminLoggedIn = sessionStorage.getItem('isAdminLoggedIn') === 'true';
-                
-                document.getElementById('open-login-modal').style.display = isAdminLoggedIn ? 'none' : 'inline-block';
-                document.getElementById('logout-btn').style.display = isAdminLoggedIn ? 'inline-block' : 'none';
-
-                document.querySelectorAll('.admin-only').forEach(el => {
-                    el.style.display = isAdminLoggedIn ? 'block' : 'none';
-                });
-
-                renderProducts(document.querySelector('.filter-btn.active')?.dataset.category || 'All');
-                ['juridico', 'contable', 'ambiental'].forEach(renderServices);
-                renderVideos(currentServiceForGallery);
-            }
-
             if(productForm) {
                 productForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    const newProduct = {
-                        id: Date.now(),
+                    const productId = document.getElementById('product-id').value;
+                    const productData = {
                         image: document.getElementById('product-image').value,
                         title: document.getElementById('product-title').value,
                         description: document.getElementById('product-description').value,
@@ -2103,14 +2175,33 @@
                         category: document.getElementById('product-category').value,
                         promotion: document.getElementById('product-promotion').checked
                     };
-                    products.push(newProduct);
+
+                    if (productId) { // Editing
+                        const index = products.findIndex(p => p.id == productId);
+                        if (index !== -1) {
+                            products[index] = { ...products[index], ...productData };
+                        }
+                    } else { // Adding
+                        productData.id = Date.now();
+                        products.push(productData);
+                    }
+
                     saveProducts();
-                    renderProducts();
+                    renderProducts(document.querySelector('.filter-btn.active')?.dataset.category || 'All');
                     productForm.reset();
                     if(productModal) productModal.style.display = 'none';
                 });
             }
             
+            document.getElementById('add-product-btn')?.addEventListener('click', () => {
+                if (productModal) {
+                    document.getElementById('product-modal-title').textContent = 'Agregar Nuevo Producto';
+                    productForm.reset();
+                    document.getElementById('product-id').value = '';
+                    productModal.style.display = 'block';
+                }
+            });
+
             const loginForm = document.getElementById('login-form');
             if (loginForm) {
                 loginForm.addEventListener('submit', function(event) {
@@ -2196,16 +2287,28 @@
                 const card = document.createElement('div');
                 card.className = 'video-card';
 
+                // --- Lógica de cálculo de aspecto ---
+                let paddingTop = '56.25%'; // Valor por defecto (16:9)
+                if (video.aspectRatio) {
+                    const [width, height] = video.aspectRatio.split(':').map(Number);
+                    if (width && height > 0) {
+                        // La fórmula es: (alto / ancho) * 100
+                        paddingTop = (height / width) * 100 + '%';
+                    }
+                }
+                // --- Fin de la lógica ---
+
                 const youtubeId = getYoutubeVideoId(video.url);
                 const thumbnailUrl = video.thumbnail || (youtubeId ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg` : 'https://placehold.co/400x300/cccccc/ffffff?text=Video');
 
                 card.innerHTML = `
                     ${isAdminLoggedIn ? `
                     <div class="admin-controls">
-                        <button class="admin-btn video-edit-btn" data-id="${video.id}"><i class="fas fa-pencil-alt"></i></button>
-                        <button class="admin-btn delete-btn video-delete-btn" data-id="${video.id}"><i class="fas fa-trash"></i></button>
+                        <button class="admin-btn video-edit-btn" data-id="${video.id}" aria-label="Editar video"><i class="fas fa-pencil-alt"></i></button>
+                        <button class="admin-btn delete-btn video-delete-btn" data-id="${video.id}" aria-label="Eliminar video"><i class="fas fa-trash"></i></button>
                     </div>` : ''}
-                    <div class="video-player-container" data-embed-url="${embedUrl}">
+                    
+                    <div class="video-player-container" data-embed-url="${embedUrl}" style="padding-top: ${paddingTop};">
                         <img src="${thumbnailUrl}" alt="Miniatura del video" onerror="this.onerror=null;this.src='https://placehold.co/400x300/cccccc/ffffff?text=Video';">
                         <div class="play-button-overlay"><i class="fas fa-play-circle"></i></div>
                     </div>
@@ -2220,8 +2323,8 @@
                     videoGalleryItems = JSON.parse(storedVideos);
                 } else {
                     videoGalleryItems = [
-                         { id: 1, title: "Caso de Éxito: Derecho Penal", url: "https://www.youtube.com/watch?v=aqz-KE-bpKQ", thumbnail: "", featured: true, service: 'juridico' },
-                         { id: 2, title: "Tutorial: Declaración Anual", url: "https://www.youtube.com/watch?v=aqz-KE-bpKQ", thumbnail: "", featured: false, service: 'contable' }
+                         { id: 1, title: "Caso de Éxito: Derecho Penal", url: "https://www.youtube.com/watch?v=aqz-KE-bpKQ", thumbnail: "", featured: true, service: 'juridico', aspectRatio: '16:9' },
+                         { id: 2, title: "Tutorial: Declaración Anual", url: "https://www.youtube.com/watch?v=aqz-KE-bpKQ", thumbnail: "", featured: false, service: 'contable', aspectRatio: '16:9' }
                     ];
                 }
             }
@@ -2235,7 +2338,8 @@
                         url: document.getElementById('video-url').value,
                         thumbnail: document.getElementById('video-thumbnail').value,
                         service: document.getElementById('video-service').value,
-                        featured: document.getElementById('video-featured').checked
+                        featured: document.getElementById('video-featured').checked,
+                        aspectRatio: document.getElementById('video-aspect-ratio').value
                     };
                      if (videoId) { // Es una edición
                         const index = videoGalleryItems.findIndex(v => v.id == videoId);
@@ -2298,6 +2402,7 @@
                             videoForm.querySelector('#video-thumbnail').value = video.thumbnail || '';
                             videoForm.querySelector('#video-service').value = video.service;
                             videoForm.querySelector('#video-featured').checked = video.featured;
+                            videoForm.querySelector('#video-aspect-ratio').value = video.aspectRatio || '16:9';
 
                             if (videoGalleryModal) videoGalleryModal.style.display = 'none';
                             if (videoModalEl) videoModalEl.style.display = 'block';
@@ -2329,7 +2434,7 @@
                     siteLocation = JSON.parse(storedLocation);
                 } else {
                      siteLocation = {
-                        title: 'Plaza de Armas de Juliaca',
+                        title: 'Plaza de Armas de Juliaca, Puno, Perú',
                         url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3845.895311933931!2d-70.1302306856754!3d-15.49079198927581!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9167f339486c7d2b%3A0x442654359691884!2sPlaza%20de%20Armas%20de%20Juliaca!5e0!3m2!1ses-419!2spe!4v1673887345123!5m2!1ses-419!2spe'
                     };
                 }
@@ -2354,6 +2459,86 @@
                 document.getElementById('location-form-url').value = siteLocation.url || '';
                 if (locationModal) locationModal.style.display = 'block';
             });
+
+            // --- GESTIÓN DE REDES SOCIALES ---
+            const socialLinksForm = document.getElementById('social-links-form');
+
+            function saveSocialLinks() {
+                localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
+            }
+
+            function loadSocialLinks() {
+                const stored = localStorage.getItem('socialLinks');
+                if (stored) {
+                    socialLinks = JSON.parse(stored);
+                } else {
+                    // Default values
+                    socialLinks = {
+                        facebook: { url: 'https://www.facebook.com/', show: true },
+                        youtube: { url: 'https://www.youtube.com/', show: true },
+                        tiktok: { url: 'https://www.tiktok.com/', show: false }
+                    };
+                }
+            }
+
+            function renderSocialLinks() {
+                // Facebook
+                const fbLink = document.getElementById('social-link-facebook');
+                if (socialLinks.facebook && socialLinks.facebook.show && socialLinks.facebook.url) {
+                    fbLink.href = socialLinks.facebook.url;
+                    fbLink.style.display = 'flex';
+                } else {
+                    fbLink.style.display = 'none';
+                }
+                // YouTube
+                const ytLink = document.getElementById('social-link-youtube');
+                if (socialLinks.youtube && socialLinks.youtube.show && socialLinks.youtube.url) {
+                    ytLink.href = socialLinks.youtube.url;
+                    ytLink.style.display = 'flex';
+                } else {
+                    ytLink.style.display = 'none';
+                }
+                // TikTok
+                const tkLink = document.getElementById('social-link-tiktok');
+                if (socialLinks.tiktok && socialLinks.tiktok.show && socialLinks.tiktok.url) {
+                    tkLink.href = socialLinks.tiktok.url;
+                    tkLink.style.display = 'flex';
+                } else {
+                    tkLink.style.display = 'none';
+                }
+            }
+
+            document.getElementById('edit-social-links-btn')?.addEventListener('click', () => {
+                if (socialLinksModal) {
+                    document.getElementById('social-facebook-url').value = socialLinks.facebook.url || '';
+                    document.getElementById('social-facebook-show').checked = socialLinks.facebook.show;
+                    
+                    document.getElementById('social-youtube-url').value = socialLinks.youtube.url || '';
+                    document.getElementById('social-youtube-show').checked = socialLinks.youtube.show;
+                    
+                    document.getElementById('social-tiktok-url').value = socialLinks.tiktok.url || '';
+                    document.getElementById('social-tiktok-show').checked = socialLinks.tiktok.show;
+                }
+            });
+
+            if (socialLinksForm) {
+                socialLinksForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    socialLinks.facebook.url = document.getElementById('social-facebook-url').value;
+                    socialLinks.facebook.show = document.getElementById('social-facebook-show').checked;
+                    
+                    socialLinks.youtube.url = document.getElementById('social-youtube-url').value;
+                    socialLinks.youtube.show = document.getElementById('social-youtube-show').checked;
+                    
+                    socialLinks.tiktok.url = document.getElementById('social-tiktok-url').value;
+                    socialLinks.tiktok.show = document.getElementById('social-tiktok-show').checked;
+                    
+                    saveSocialLinks();
+                    renderSocialLinks();
+                    if (socialLinksModal) socialLinksModal.style.display = 'none';
+                });
+            }
 
             // --- Lógica del Carrito de Compras ---
             const cartItemsList = document.getElementById('cart-items-list');
@@ -2516,7 +2701,24 @@
                 loadProducts();
                 loadVideos();
                 loadLocation();
+                loadSocialLinks();
                 updateAdminView();
+            }
+
+            function updateAdminView() {
+                isAdminLoggedIn = sessionStorage.getItem('isAdminLoggedIn') === 'true';
+                
+                document.getElementById('open-login-modal').style.display = isAdminLoggedIn ? 'none' : 'inline-block';
+                document.getElementById('logout-btn').style.display = isAdminLoggedIn ? 'inline-block' : 'none';
+
+                document.querySelectorAll('.admin-only').forEach(el => {
+                    el.style.display = isAdminLoggedIn ? 'block' : 'none';
+                });
+
+                renderProducts(document.querySelector('.filter-btn.active')?.dataset.category || 'All');
+                ['juridico', 'contable', 'ambiental'].forEach(renderServices);
+                renderVideos(currentServiceForGallery);
+                renderSocialLinks();
             }
 
             initializeApp();
@@ -2524,4 +2726,7 @@
     </script>
 </body>
 </html>
+"
+
+
 
